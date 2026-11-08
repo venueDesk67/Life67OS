@@ -1,167 +1,434 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#ffffff">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#100d20">
 <title>LIFE OS67</title>
 <style>
-:root{--bg:#f5f3ee;--white:#fff;--gold:#aa812f;--gold-light:#f5edda;--text:#29261f;--muted:#777267;--border:#e6dfd0;--green:#397653}
+:root{
+ --bg:#100d20;--panel:#1b1630;--panel2:#241d3d;
+ --gold:#d9b66d;--purple:#9474d8;--text:#eee9df;
+ --muted:#aaa1b8;--line:#403652;--green:#80b99a;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{background:#fff;padding:18px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-.logo{color:var(--gold);font-size:20px;font-weight:bold;letter-spacing:3px}.version{font-size:10px;color:var(--muted)}
-main{max-width:1100px;margin:auto;padding:16px 14px 30px}
-h1{font-size:28px;margin:10px 0}h2{font-size:19px;color:var(--gold);margin:5px 0 12px}h3{font-size:16px;margin:4px 0 10px}
-p{color:var(--muted);line-height:1.5}.small{font-size:11px;color:var(--muted)}.kicker{color:var(--gold);font-size:11px;font-weight:bold;letter-spacing:2px}
-.panel{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin:13px 0;box-shadow:0 3px 12px #382d1408}
-.hero{background:linear-gradient(120deg,#fffdf8,#f3ead5);border-color:#d8c28f}
-.level{font-size:35px;color:var(--gold);font-weight:bold;margin:7px 0}
-.xpbar,.skill-track{height:9px;background:#e9e3d7;border-radius:20px;overflow:hidden;margin:10px 0}.xpfill,.skill-track i{display:block;height:100%;background:linear-gradient(90deg,#aa812f,#e0c47f);width:0}
-.stats,.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.stat{background:#fbf9f4;border:1px solid var(--border);padding:12px;border-radius:12px;font-size:12px;color:var(--muted)}
-.stat strong{display:block;color:var(--gold);font-size:23px;margin:5px 0}
-nav{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;background:#fff;padding:9px;border:1px solid var(--border);border-radius:14px;margin:16px 0}
-button{background:#fff;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px;font-size:13px;font-weight:bold;cursor:pointer}
-button.active{background:var(--gold-light);color:#79591e;border-color:var(--gold)}
-button.primary{background:var(--gold);color:#fff;border-color:var(--gold)}
-button.danger{color:#9b3434;border-color:#e8caca}
-button:disabled{opacity:.5;cursor:not-allowed}
-input,textarea,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;margin:7px 0 12px;font:inherit;background:#fff;color:var(--text)}
-label{font-size:11px;color:var(--muted);font-weight:bold;display:block}
-.section{display:none}.section.active{display:block}
-.tag{display:inline-block;background:var(--gold-light);color:#79591e;padding:5px 9px;border-radius:5px;font-size:10px;margin:3px}
-.item{border-bottom:1px solid var(--border);padding:11px 0}.item:last-child{border:0}
-.card{background:#fff;border:1px solid var(--border);border-radius:13px;padding:13px;text-align:left;width:100%}
-.card strong{display:block;margin-bottom:6px}.card span{font-size:11px;color:var(--muted);line-height:1.5}
-.skill-level{color:var(--gold);font-size:22px;font-weight:bold;margin:7px 0}
-.connection{border-left:2px solid #c5a45f;margin-left:10px;padding-left:13px}.node{background:#faf7ef;border:1px solid #e7dec9;padding:11px;border-radius:10px;margin:7px 0}
-.chatlog{max-height:360px;overflow:auto;background:#fbf9f4;border:1px solid var(--border);padding:10px;border-radius:10px;margin:10px 0}
-.chatmsg{padding:9px 11px;border-radius:10px;margin:7px 0;white-space:pre-wrap;line-height:1.45;font-size:13px}
-.user{background:#f2e8d2;margin-left:12%}.assistant{background:#fff;border:1px solid var(--border);margin-right:8%}
-.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
-.mission{border:1px solid var(--border);border-radius:10px;padding:12px;margin:9px 0;background:#fff}
-footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
-@media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}nav{grid-template-columns:repeat(5,1fr)}.grid{grid-template-columns:repeat(3,1fr)}}
+body{margin:0;background:var(--bg);color:var(--text);
+ font-family:Georgia,"Times New Roman",serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{padding:20px 16px;background:#171229;border-bottom:1px solid var(--line)}
+.brand{font-size:25px;letter-spacing:3px;color:var(--gold)}
+.subtitle{color:var(--muted);font-size:12px;margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
+.stat,.panel,.tile{background:var(--panel);border:1px solid var(--line);border-radius:9px}
+.stat{padding:12px;text-align:center}
+.stat strong{display:block;color:var(--gold);font-size:22px}
+.stat span{font-size:11px;color:var(--muted)}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px}
+nav button,.action{background:var(--panel2);border:1px solid var(--line);
+ color:var(--text);padding:11px 5px;border-radius:6px;font-size:12px}
+nav button.active,.action.primary{border-color:var(--gold);color:var(--gold)}
+main{padding:12px;max-width:900px;margin:auto}
+section{display:none}
+section.active{display:block}
+h2{font-size:20px;color:var(--gold);font-weight:normal;margin:8px 0 15px}
+h3{font-size:15px;color:var(--gold);font-weight:normal}
+p,.muted{color:var(--muted);line-height:1.5;font-size:13px}
+.panel{padding:14px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.tile{padding:12px}
+.tile strong{display:block;margin-bottom:5px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.bar{height:7px;background:#090713;border-radius:10px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--gold)}
+.small{font-size:11px;color:var(--muted)}
+input,textarea,select{width:100%;background:#100d20;border:1px solid var(--line);
+ color:var(--text);padding:11px;border-radius:6px;margin:5px 0 10px}
+textarea{min-height:85px;resize:vertical}
+.action{margin:4px 3px 4px 0}
+.action:active{transform:scale(.98)}
+.skill{padding:11px 0;border-bottom:1px solid var(--line)}
+.skill:last-child{border:0}
+.level{width:65px!important;text-align:center;padding:8px}
+.tag{font-size:10px;color:var(--purple);text-transform:uppercase}
+.locked{opacity:.55}
+.chat{background:#100d20;padding:12px;border-radius:7px;margin:8px 0;
+ white-space:pre-wrap;font-size:13px;line-height:1.5}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:11px}
+@media(min-width:650px){
+ nav{grid-template-columns:repeat(8,1fr)}
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 </style>
 </head>
 <body>
-<header><div class="logo">LIFE OS67</div><div class="version">YOUR PERSONAL OPERATING SYSTEM · V0.3</div></header>
+<header>
+ <div class="brand">LIFE OS67</div>
+ <div class="subtitle">THE BRAIN TREE · PERSONAL DEVELOPMENT SYSTEM</div>
+</header>
+
+<div class="stats">
+ <div class="stat"><strong id="level">01</strong><span>PLAYER LEVEL</span></div>
+ <div class="stat"><strong id="xp">0</strong><span>NEW XP</span></div>
+ <div class="stat"><strong id="unlocks">0</strong><span>UNLOCKED</span></div>
+</div>
+
+<nav id="nav">
+ <button class="active" data-tab="home">Home</button>
+ <button data-tab="profile">Profile</button>
+ <button data-tab="tree">Brain Tree</button>
+ <button data-tab="missions">Missions</button>
+ <button data-tab="games">Minigames</button>
+ <button data-tab="projects">Projects</button>
+ <button data-tab="ai">Matt's AI</button>
+ <button data-tab="data">Data</button>
+</nav>
+
 <main>
-<section id="dashboard" class="section active">
-<div class="kicker">YOUR WORLD · YOUR PROGRESSION</div><h1>Welcome back.</h1><p>Your life. Your abilities. Your development.</p>
-<div class="panel hero"><div class="small">LIVE PLAYER PROGRESSION</div><div class="level" id="playerLevel">LEVEL 01</div><p>XP is awarded only after you confirm a mission is complete.</p><div class="xpbar"><div class="xpfill" id="xpFill"></div></div><strong id="xpText">0 / 100 XP</strong><p id="xpNext">100 XP to next level</p><span class="tag">PLAYER CONTROLLED</span><p class="small">Historical design XP: 515 (kept separate from live mission XP).</p></div>
-<div class="stats"><div class="stat">Skills<strong id="skillCount">0</strong>In directory</div><div class="stat">Rated skills<strong id="ratedCount">0</strong>Player-entered</div><div class="stat">Missions<strong id="missionCount">0</strong>Available / active</div><div class="stat">Live XP<strong id="liveXP">0</strong>Earned by you</div></div>
-<div class="panel"><div class="kicker">QUICK ACCESS</div><h2>Open your world</h2><div class="grid">
-<button class="card" onclick="showSection('profile')"><strong>Player Profile</strong><span>Editable levels and evidence</span></button>
-<button class="card" onclick="showSection('lifemap')"><strong>Life Map</strong><span>Branches, skills and projects</span></button>
-<button class="card" onclick="showSection('connections')"><strong>Connections</strong><span>Explore linked development areas</span></button>
-<button class="card" onclick="showSection('tree')"><strong>Brain Tree</strong><span>Proposals and player approvals</span></button>
-<button class="card" onclick="showSection('missions')"><strong>Mission Centre</strong><span>Five starter missions and XP</span></button>
-<button class="card" onclick="showSection('ai')"><strong>Matt's Level AI</strong><span>Local assistant and analysis</span></button>
-</div></div>
-<div class="panel"><h2>Operating rule</h2><p>AI may analyse, recommend and propose. Only you can approve or activate a Brain Tree branch or ability. Unknown levels remain blank.</p></div>
+<section id="home" class="active">
+ <h2>PLAYER DASHBOARD</h2>
+ <div class="panel">
+  <div class="row"><strong>Welcome to LIFE OS67</strong><span class="tag">Unlimited growth</span></div>
+  <p>Your personal system for learning, developing skills, building projects and turning potential into ability.</p>
+  <div class="bar"><i id="xpbar" style="width:0%"></i></div>
+  <div class="row small"><span id="xptext">0 / 100 XP</span><span id="nextlevel">Next level</span></div>
+ </div>
+ <h3>YOUR DEVELOPMENT SYSTEM</h3>
+ <div class="grid">
+  <div class="tile"><strong>Player Profile</strong><p>Track attributes, skills and evidence.</p><button class="action" onclick="show('profile')">Open</button></div>
+  <div class="tile"><strong>Brain Tree</strong><p>Explore and unlock development paths.</p><button class="action" onclick="show('tree')">Open</button></div>
+  <div class="tile"><strong>Missions</strong><p>Complete challenges and earn XP.</p><button class="action" onclick="show('missions')">Open</button></div>
+  <div class="tile"><strong>Minigames</strong><p>Practise thinking and problem-solving.</p><button class="action" onclick="show('games')">Play</button></div>
+  <div class="tile"><strong>Projects</strong><p>Keep track of your real-world creations.</p><button class="action" onclick="show('projects')">Open</button></div>
+  <div class="tile"><strong>Matt's Level AI</strong><p>Ask questions about your development.</p><button class="action" onclick="show('ai')">Talk</button></div>
+ </div>
+ <div class="panel">
+  <h3>HISTORICAL PROFILE</h3>
+  <p>Recovered historical XP: <strong>515</strong></p>
+  <p>Historical core average: <strong>61.8 / 100</strong></p>
+  <p>Historical specialisations: <strong>15</strong></p>
+  <p class="small">Historical figures are kept separate from new progress earned in this version.</p>
+ </div>
 </section>
 
-<section id="profile" class="section"><div class="kicker">PLAYER CENTRE</div><h1>Player Profile</h1><p>One overall level per skill, from 1–100. Add evidence and connections separately.</p>
-<div class="panel"><h2>Skill directory</h2><input id="skillSearch" placeholder="Filter skills..." oninput="renderSkills()"><div id="skillDirectory" class="grid"></div></div>
-<div id="skillProfilePanel" class="panel" style="display:none">
-<div class="row"><div class="kicker">INDIVIDUAL SKILL PROFILE</div><button onclick="closeSkill()">Close ×</button></div>
-<h2 id="skillPanelName"></h2><span class="tag" id="skillPanelBranch"></span><div class="skill-level" id="skillPanelLevel">Level not entered</div><div class="skill-track"><i id="skillPanelBar"></i></div>
-<p id="skillPanelDescription"></p>
-<label>Skill level (1–100; leave blank if unknown)</label><input id="editSkillLevel" type="number" min="1" max="100" placeholder="Enter your level">
-<label>Evidence and experience</label><textarea id="editSkillEvidence" rows="3" placeholder="What have you done to demonstrate this skill?"></textarea>
-<label>Connected skills, projects and knowledge</label><textarea id="editSkillConnections" rows="3" placeholder="Add genuine connections. Separate items with commas."></textarea>
-<label>Development plan</label><textarea id="editSkillDevelopment" rows="3" placeholder="What would help you improve?"></textarea>
-<button class="primary" onclick="saveSkillProfile()">Save Skill Profile</button><p id="skillSaveMessage" class="small"></p>
-<div class="item"><strong>Assessment history</strong><div id="skillPanelHistory" class="small">No assessment history yet.</div></div>
-</div></section>
+<section id="profile">
+ <h2>PLAYER PROFILE</h2>
+ <div class="panel">
+  <h3>CORE ATTRIBUTES</h3>
+  <div id="attributes"></div>
+ </div>
+ <div class="panel">
+  <h3>SPECIALISATIONS</h3>
+  <p>Choose a specialisation to inspect its recovered skills.</p>
+  <div id="specialisations"></div>
+  <div id="specialdetail"></div>
+ </div>
+ <div class="panel">
+  <h3>ADD OR UPDATE A SKILL</h3>
+  <label class="small">Skill name</label><input id="skillname" placeholder="e.g. Financial management">
+  <label class="small">Level (1–100)</label><input id="skilllevel" type="number" min="1" max="100" value="50">
+  <label class="small">Source</label>
+  <select id="skillsource"><option>Player-entered</option><option>AI-assessed</option><option>Evidence-supported</option><option>Verified</option></select>
+  <label class="small">Evidence or notes</label><textarea id="skillevidence" placeholder="What supports this level?"></textarea>
+  <button class="action primary" onclick="addSkill()">Save skill</button>
+  <div id="customskills"></div>
+ </div>
+</section>
 
-<section id="lifemap" class="section"><div class="kicker">YOUR DEVELOPMENT STRUCTURE</div><h1>Life Map</h1><p>Choose a branch to explore its skills and connected work. Proposed structure does not mean unlocked.</p><div id="lifeMapBranches" class="grid"></div><div id="branchDetail" class="panel"><p>Select a branch to see its connected skills, projects and knowledge.</p></div></section>
-<section id="connections" class="section"><div class="kicker">THE KNOWLEDGE NETWORK</div><h1>Connections</h1><p>Connections are suggestions grounded in the structure below. Edit individual links in each skill profile.</p><div id="connectionMap" class="panel"></div></section>
+<section id="tree">
+ <h2>THE BRAIN TREE</h2>
+ <div class="panel">
+  <p>Branches automatically unlock when their requirements are reached. Unlocking gives access to development; it does not mean mastery.</p>
+  <p class="small">Requirements are visible. XP and skill levels are separate.</p>
+ </div>
+ <div id="treecontent"></div>
+</section>
 
-<section id="archive" class="section"><h1>Brain Archive</h1><p>Your central knowledge record.</p><div class="panel"><label>ENTRY TITLE</label><input id="archiveTitle" placeholder="What have you learned?"><label>DETAILS</label><textarea id="archiveBody" rows="4" placeholder="Record knowledge, learning or evidence..."></textarea><button class="primary" onclick="addArchive()">Save entry</button></div><div class="panel"><h2>Saved knowledge</h2><div id="archiveList"></div></div></section>
+<section id="missions">
+ <h2>MISSIONS</h2>
+ <div class="panel">
+  <h3>MISSION GENERATOR</h3>
+  <input id="missionname" placeholder="Mission title">
+  <textarea id="missiondesc" placeholder="What needs to be achieved?"></textarea>
+  <input id="missionxp" type="number" min="1" max="100" value="25" placeholder="XP reward">
+  <button class="action primary" onclick="addMission()">Create mission</button>
+ </div>
+ <div id="missionlist"></div>
+</section>
 
-<section id="tree" class="section"><h1>Brain Tree</h1><p>Unlimited growth is an architectural principle, not an unlock. Nothing activates without your approval.</p><div class="panel"><h2>Proposed abilities</h2><div id="treeList"></div></div><div class="panel"><h2>Propose an ability</h2><label>ABILITY NAME</label><input id="abilityName" placeholder="Ability name"><label>BRANCH</label><input id="abilityBranch" placeholder="Related branch"><button class="primary" onclick="proposeAbility()">Submit proposal</button></div><div class="panel"><h2>Player authority</h2><div id="approvalList"></div></div></section>
+<section id="games">
+ <h2>MINIGAMES</h2>
+ <div class="panel">
+  <h3>MEMORY & KNOWLEDGE CHALLENGE</h3>
+  <p>Answer correctly to earn practice XP. Daily minigame XP is capped at 50.</p>
+  <div id="gamearea"><button class="action primary" onclick="newQuestion()">Start challenge</button></div>
+ </div>
+ <div class="panel">
+  <h3>MINIGAME RECORD</h3>
+  <p id="gamestats">No games played yet.</p>
+ </div>
+</section>
 
-<section id="missions" class="section"><h1>Mission Centre</h1><p>Complete a task, submit it for review, then explicitly confirm completion to receive XP.</p><div class="panel"><h2>Starter missions</h2><p class="small">Five easy missions · 10 XP each · XP is not awarded until you confirm completion.</p><div id="missionList"></div></div><div class="panel"><h2>Create a mission</h2><label>MISSION TITLE</label><input id="missionTitle" placeholder="Enter mission"><label>DESCRIPTION</label><textarea id="missionDescription" rows="3" placeholder="What needs to be achieved?"></textarea><button class="primary" onclick="addMission()">Create mission</button></div></section>
+<section id="projects">
+ <h2>PROJECT ARCHIVE</h2>
+ <div class="panel">
+  <h3>ADD PROJECT</h3>
+  <input id="projectname" placeholder="Project name">
+  <textarea id="projectdesc" placeholder="Purpose, progress and notes"></textarea>
+  <button class="action primary" onclick="addProject()">Save project</button>
+ </div>
+ <div id="projectlist"></div>
+</section>
 
-<section id="achievements" class="section"><h1>Achievement Archive</h1><p>A record of completed work and demonstrated outcomes.</p><div class="panel"><label>ACHIEVEMENT</label><input id="achievementTitle" placeholder="Achievement title"><label>EVIDENCE</label><textarea id="achievementEvidence" rows="3" placeholder="What proves this achievement?"></textarea><button class="primary" onclick="addAchievement()">Record achievement</button></div><div class="panel"><div id="achievementList"></div></div></section>
+<section id="ai">
+ <h2>MATT'S LEVEL AI</h2>
+ <div class="panel">
+  <span class="tag">LOCAL INTELLIGENCE MODE</span>
+  <p>Matt's Level AI can inspect your saved profile, explain your progression, identify missing information and suggest development activities.</p>
+  <div id="chatlog" class="chat">Matt's Level AI: Ready. Ask me about your profile, skills, Brain Tree, missions or development.</div>
+  <textarea id="question" placeholder="Ask Matt's Level AI..."></textarea>
+  <button class="action primary" onclick="askAI()">Send</button>
+  <button class="action" onclick="clearChat()">Clear chat</button>
+ </div>
+ <div class="panel">
+  <h3>AI CAPABILITIES</h3>
+  <p>Current version: local profile-aware assistant. It does not contact an external AI model or independently verify real-world abilities.</p>
+ </div>
+</section>
 
-<section id="evolution" class="section"><h1>Evolution Chamber</h1><p>Potential improvements and future development.</p><div class="panel"><div class="item">Execution Intelligence — develop consistent action.</div><div class="item">Communication Intelligence — improve message effectiveness.</div><div class="item">Potential Discovery — identify emerging capabilities.</div><p class="small">These are development proposals, not activated abilities.</p></div></section>
-
-<section id="ai" class="section"><h1>Matt's Level AI</h1><p>Your personal development architect. This version analyses data stored in this browser; live cloud AI is not connected yet.</p><div class="panel"><div class="kicker">CONVERSATION</div><div id="chatLog" class="chatlog"><div class="chatmsg assistant">Hello. I'm Matt's Level AI. I can review your saved skill profiles, suggest a practical mission, and help organise your Life Map. What would you like to work on?</div></div><textarea id="aiCommand" rows="3" placeholder="Talk to Matt's Level AI..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();runAICommand()}"></textarea><button class="primary" onclick="runAICommand()">Send message</button><p class="small">Secure AI integration requires a private backend and an API key stored server-side. Never paste a secret key into this public website.</p></div><div class="panel"><h2>Development note</h2><textarea id="aiNote" rows="3" placeholder="Save a private note in this browser..."></textarea><button onclick="saveNote()">Save note</button><span id="noteStatus" class="small"></span></div></section>
-
-<section id="data" class="section"><h1>Personal Data System</h1><p>Your records are stored in this browser on this device. Export backups regularly. Clearing browser data may remove them.</p><div class="panel"><h2>Backup</h2><button class="primary" onclick="exportBackup()">Export full backup (JSON)</button><label style="margin-top:14px">Restore a LIFE OS67 JSON backup</label><input id="backupFile" type="file" accept=".json,application/json"><button onclick="importBackup()">Validate and restore backup</button><p id="backupStatus" class="small"></p></div><div class="panel"><h2>Data controls</h2><p>Restoring replaces the current browser record after confirmation. Keep a backup before restoring.</p><button class="danger" onclick="resetLocalData()">Reset browser data</button></div></section>
-
-<nav id="navigation">
-<button class="active" onclick="showSection('dashboard',this)">Dashboard</button><button onclick="showSection('lifemap',this)">Life Map</button><button onclick="showSection('connections',this)">Connections</button><button onclick="showSection('profile',this)">Profile</button><button onclick="showSection('archive',this)">Archive</button><button onclick="showSection('tree',this)">Brain Tree</button><button onclick="showSection('missions',this)">Missions</button><button onclick="showSection('achievements',this)">Achievements</button><button onclick="showSection('evolution',this)">Evolution</button><button onclick="showSection('ai',this)">Matt's AI</button><button onclick="showSection('data',this)">My Data</button>
-</nav>
+<section id="data">
+ <h2>DATA MANAGEMENT</h2>
+ <div class="panel">
+  <h3>BACKUP YOUR LIFE OS67</h3>
+  <p>Export a backup before replacing the website or changing devices.</p>
+  <button class="action primary" onclick="exportData()">Export backup</button>
+  <h3>RESTORE BACKUP</h3>
+  <input type="file" id="importfile" accept=".json,application/json">
+  <button class="action" onclick="importData()">Import backup</button>
+  <h3>DATA STATUS</h3>
+  <p id="datastatus">Local storage active.</p>
+  <button class="action" onclick="resetData()">Reset new data</button>
+  <p class="small">Reset removes new data in this version. Export first. Historical seed records are retained.</p>
+ </div>
+</section>
 </main>
-<footer>LIFE OS67 · BUILD YOUR POTENTIAL · V0.3<br>Local browser storage · Player-controlled progression</footer>
+<footer>LIFE OS67 · UNLIMITED GROWTH · VERSION 0.5</footer>
 
 <script>
-const defaultSkills=[
-{name:"Knowledge",branch:"Intelligence",level:90,source:"Player-entered"},
-{name:"Research",branch:"Intelligence",level:null},{name:"Learning",branch:"Intelligence",level:null},{name:"Memory",branch:"Intelligence",level:null},
-{name:"Planning",branch:"Strategy",level:null},{name:"Decision Making",branch:"Strategy",level:null},
-{name:"Communication",branch:"Communication",level:null},{name:"Listening",branch:"Communication",level:null},{name:"Creative Thinking",branch:"Creation",level:null},
-{name:"Design",branch:"Creation",level:null},{name:"Leadership",branch:"Leadership & Team",level:null},{name:"Team Development",branch:"Leadership & Team",level:null},
-{name:"Adaptability",branch:"Resilience & Independence",level:null},{name:"Self-Management",branch:"Resilience & Independence",level:null},
-{name:"Business Development",branch:"Specialisations",level:null},{name:"Hospitality",branch:"Specialisations",level:null},{name:"Mixology",branch:"Specialisations",level:null},
-{name:"Event Management",branch:"Specialisations",level:null},{name:"Psychology & Human Behaviour",branch:"Specialisations",level:null},
-{name:"Game Design",branch:"Specialisations",level:null},{name:"Programming",branch:"Specialisations",level:null},
-{name:"Education",branch:"Specialisations",level:null},{name:"Finance",branch:"Specialisations",level:null},{name:"Marketing",branch:"Specialisations",level:null},
-{name:"Research Methods",branch:"Specialisations",level:null},{name:"Creative Writing",branch:"Specialisations",level:null},{name:"Project Architecture",branch:"Specialisations",level:null}
+const KEY="lifeos67_v05";
+const historical={
+ attributes:[
+ ["Intelligence",74.5],["Communication",71.5],["Execution",66],
+ ["Strategy",62.5],["Resilience",62],["Independence & Freedom",60],
+ ["Leadership & Team",50],["Creation",47.9]
+ ],
+ specs:[
+ {id:"S01",name:"Business & Entrepreneurship",avg:61.7,skills:[["Business knowledge",55],["Planning",65],["Development",55],["Entrepreneurship",75],["Marketing",55],["Operations",65]]},
+ {id:"S02",name:"Hospitality & Mixology",avg:80,skills:[["Hospitality",85],["Bartending",90],["Mixology",85],["Cocktails",80],["Customer service",85],["Guest experience",80],["Bar operations",85],["Restaurant operations",65],["Staff training",70]]},
+ {id:"S03",name:"Event Management",avg:68.9,skills:[["Planning",70],["Coordination",65],["Experience design",85],["Entertainment",65],["Suppliers",55],["Venue",75],["Marketing",65],["Guest management",75]]},
+ {id:"S04",name:"Psychology & Human Behaviour",avg:59,skills:[["Human behaviour",55],["Emotional intelligence",50],["Self-awareness",80],["Empathy",60],["Motivation",65],["Personality",45],["Social dynamics",65],["Conflict psychology",40]]},
+ {id:"S05",name:"Technology",avg:50,skills:[]},
+ {id:"S06",name:"Artificial Intelligence",avg:73.8,skills:[]},
+ {id:"S07",name:"Game Development",avg:66,skills:[["Game design",65],["Mechanics",70],["World-building",85],["Narrative",80],["Level design",65],["Progression",80],["Character",70],["UI",65],["Programming",20],["Production",45]]},
+ {id:"S08",name:"Pokémon",avg:71,skills:[]},
+ {id:"S09",name:"Education",avg:65.5,skills:[]},
+ {id:"S10",name:"Finance & Economics",avg:52.8,skills:[]},
+ {id:"S11",name:"Marketing & Branding",avg:71.5,skills:[]},
+ {id:"S12",name:"Research & Investigation",avg:77.5,skills:[]},
+ {id:"S13",name:"Creative Writing & Comics",avg:76,skills:[]},
+ {id:"S14",name:"Project Architecture",avg:76.5,skills:[]},
+ {id:"S15",name:"Human Team Development",avg:70,skills:[]}
+ ],
+ projects:[
+ ["Hosted By Matt","Training project"],
+ ["PokeLevelUp","Training project"],
+ ["Trainer Matt: Wildbound","Training project"],
+ ["Aiko's World","Training project"],
+ ["Hospitality","Training project"],
+ ["VenueDesk","Training project"],
+ ["Captain Obvious","Training project"]
+ ]
+};
+const branches=[
+ {name:"Knowledge",desc:"Learning, understanding and information.",req:0,skill:"Intelligence"},
+ {name:"Communication",desc:"Expression, listening and connection.",req:50,skill:"Communication"},
+ {name:"Strategy",desc:"Planning, decisions and long-term thinking.",req:100,skill:"Strategy"},
+ {name:"Creation",desc:"Design, imagination and building.",req:150,skill:"Creation"},
+ {name:"Execution",desc:"Turning plans into completed work.",req:200,skill:"Execution"},
+ {name:"Leadership",desc:"People, teams and direction.",req:250,skill:"Leadership & Team"},
+ {name:"Resilience",desc:"Adaptation and persistence.",req:300,skill:"Resilience"},
+ {name:"Independence",desc:"Self-direction and freedom.",req:350,skill:"Independence & Freedom"}
 ];
-const branchInfo=[
-{ name:"Intelligence",desc:"Knowledge, learning, memory and research.",skills:["Knowledge","Research","Learning","Memory","Research Methods"],projects:["LIFE OS67"],knowledge:["Learning methods","Evidence assessment"]},
-{ name:"Strategy",desc:"Planning, decisions and systems.",skills:["Planning","Decision Making","Project Architecture","Business Development"],projects:["LIFE OS67","Hosted By Matt"],knowledge:["Decision frameworks","Project planning"]},
-{ name:"Communication",desc:"Expression, listening, service and influence.",skills:["Communication","Listening","Marketing","Creative Writing"],projects:["Hosted By Matt","@pokelevelup"],knowledge:["Audience communication","Storytelling"]},
-{ name:"Creation",desc:"Ideas, design, writing and making.",skills:["Creative Thinking","Design","Game Design","Creative Writing"],projects:["LIFE OS67","Pokémon project"],knowledge:["Design principles","Narrative design"]},
-{ name:"Leadership & Team",desc:"People, collaboration, training and leadership.",skills:["Leadership","Team Development","Hospitality","Event Management"],projects:["Hosted By Matt"],knowledge:["Team development","Guest experience"]},
-{ name:"Resilience & Independence",desc:"Adaptability, self-management and personal freedom.",skills:["Adaptability","Self-Management","Planning"],projects:["LIFE OS67"],knowledge:["Personal systems","Consistent execution"]},
-{ name:"Specialisations",desc:"Applied areas of expertise and long-term projects.",skills:["Business Development","Hospitality","Mixology","Event Management","Psychology & Human Behaviour","Game Design","Programming","Education","Finance","Marketing","Research Methods","Creative Writing","Project Architecture"],projects:["Hosted By Matt","LIFE OS67","Pokémon project"],knowledge:["Applied practice","Portfolio evidence"]}
+let state;
+function fresh(){
+ return {xp:0,missions:[],games:0,gameXP:0,gameDay:"",
+ customSkills:[],projects:historical.projects.map(x=>({name:x[0],desc:x[1],status:"Training archive"})),
+ attributes:historical.attributes.map(x=>({name:x[0],level:x[1],source:"Historical AI assessment"})),
+ specs:historical.specs.map(x=>({...x,skills:x.skills.map(s=>({name:s[0],level:s[1],source:"Historical AI assessment"}))}))
+ };
+}
+function load(){
+ try{
+ let saved=localStorage.getItem(KEY);
+ if(saved){state=JSON.parse(saved);return}
+ // Preserve the previous website's storage; do not overwrite it.
+ state=fresh();save();
+ }catch(e){state=fresh()}
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function show(id){
+ document.querySelectorAll("main section").forEach(x=>x.classList.toggle("active",x.id===id));
+ document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.tab===id));
+ window.scrollTo(0,0);
+}
+document.getElementById("nav").addEventListener("click",e=>{
+ const b=e.target.closest("button[data-tab]");if(b)show(b.dataset.tab);
+});
+function level(){return Math.floor(state.xp/100)+1}
+function unlocked(){return branches.filter(b=>state.xp>=b.req).length}
+function render(){
+ document.getElementById("level").textContent=String(level()).padStart(2,"0");
+ document.getElementById("xp").textContent=state.xp;
+ document.getElementById("unlocks").textContent=unlocked();
+ document.getElementById("xpbar").style.width=(state.xp%100)+"%";
+ document.getElementById("xptext").textContent=(state.xp%100)+" / 100 XP";
+ document.getElementById("nextlevel").textContent=(100-state.xp%100)+" XP to next level";
+ document.getElementById("attributes").innerHTML=state.attributes.map((a,i)=>`
+ <div class="skill"><div class="row"><span>${esc(a.name)}</span>
+ <input class="level" type="number" min="1" max="100" value="${a.level}"
+ onchange="updateAttribute(${i},this.value)"></div>
+ <div class="bar"><i style="width:${a.level}%"></i></div>
+ <span class="small">${esc(a.source)}</span></div>`).join("");
+ document.getElementById("specialisations").innerHTML=state.specs.map((s,i)=>`
+ <button class="action" onclick="showSpec(${i})">${s.id} · ${esc(s.name)} (${s.avg})</button>`).join("");
+ document.getElementById("treecontent").innerHTML=branches.map(b=>{
+ const open=state.xp>=b.req;
+ return `<div class="panel ${open?"":"locked"}"><div class="row"><strong>${open?"OPEN":"LOCKED"} · ${b.name}</strong><span class="tag">${b.req} XP</span></div><p>${b.desc}</p><p class="small">Requirement: ${b.req} total XP · Related attribute: ${b.skill}</p></div>`;
+ }).join("");
+ document.getElementById("missionlist").innerHTML=state.missions.length?state.missions.map((m,i)=>`
+ <div class="panel"><strong>${esc(m.name)}</strong><p>${esc(m.desc)}</p>
+ <div class="row"><span class="small">${m.xp} XP · ${m.done?"Completed":"In progress"}</span>
+ ${m.done?"<span class='tag'>Claimed</span>":`<button class="action primary" onclick="completeMission(${i})">Complete</button>`}</div></div>`).join(""):"<p>No missions yet. Create your first mission above.</p>";
+ document.getElementById("projectlist").innerHTML=state.projects.map(p=>`
+ <div class="panel"><strong>${esc(p.name)}</strong><p>${esc(p.desc)}</p><span class="tag">${esc(p.status)}</span></div>`).join("");
+ document.getElementById("customskills").innerHTML=state.customSkills.map(s=>`
+ <div class="skill"><div class="row"><strong>${esc(s.name)}</strong><strong>${s.level}/100</strong></div>
+ <p>${esc(s.source)} · ${esc(s.evidence)}</p></div>`).join("");
+ document.getElementById("gamestats").textContent=state.games+" games played · "+state.gameXP+" minigame XP earned.";
+ document.getElementById("datastatus").textContent="Local storage active · "+state.customSkills.length+" custom skills · "+state.missions.length+" missions.";
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function updateAttribute(i,v){
+ let n=Number(v);if(!Number.isFinite(n))return;
+ state.attributes[i].level=Math.max(1,Math.min(100,n));state.attributes[i].source="Player-updated";
+ save();
+}
+function showSpec(i){
+ const s=state.specs[i];
+ document.getElementById("specialdetail").innerHTML=`<h3>${esc(s.id)} · ${esc(s.name)}</h3><p>Historical average: ${s.avg}/100</p>`+
+ (s.skills.length?s.skills.map((k,j)=>`<div class="skill"><div class="row"><span>${esc(k.name)}</span><input class="level" type="number" min="1" max="100" value="${k.level}" onchange="updateSpec(${i},${j},this.value)"></div><span class="small">${esc(k.source)}</span><div class="bar"><i style="width:${k.level}%"></i></div></div>`).join(""):"<p>Individual historical records have not yet been recovered. Add evidence before assessing these skills.</p>");
+}
+function updateSpec(i,j,v){
+ let n=Number(v);if(!Number.isFinite(n))return;
+ state.specs[i].skills[j].level=Math.max(1,Math.min(100,n));
+ state.specs[i].skills[j].source="Player-updated";
+ save();showSpec(i);
+}
+function addSkill(){
+ let name=document.getElementById("skillname").value.trim();
+ let n=Number(document.getElementById("skilllevel").value);
+ if(!name||n<1||n>100)return alert("Enter a skill name and level from 1 to 100.");
+ state.customSkills.push({name,level:n,source:document.getElementById("skillsource").value,evidence:document.getElementById("skillevidence").value});
+ save();document.getElementById("skillname").value="";
+ document.getElementById("skillevidence").value="";
+}
+function addMission(){
+ let name=document.getElementById("missionname").value.trim();
+ let xp=Math.max(1,Math.min(100,Number(document.getElementById("missionxp").value)||1));
+ if(!name)return alert("Give your mission a title.");
+ state.missions.push({name,desc:document.getElementById("missiondesc").value,xp,done:false});
+ document.getElementById("missionname").value="";document.getElementById("missiondesc").value="";
+ save();
+}
+function completeMission(i){
+ if(state.missions[i].done)return;
+ if(!confirm("Confirm that this mission is genuinely complete?"))return;
+ state.missions[i].done=true;state.xp+=state.missions[i].xp;save();
+}
+function addProject(){
+ let name=document.getElementById("projectname").value.trim();
+ if(!name)return alert("Enter a project name.");
+ state.projects.push({name,desc:document.getElementById("projectdesc").value,status:"In progress"});
+ document.getElementById("projectname").value="";document.getElementById("projectdesc").value="";
+ save();
+}
+const questions=[
+ {q:"Which is the best first step when building a project?",a:["Plan the objective","Spend money","Add decoration"],correct:0},
+ {q:"What does evidence-supported mean?",a:["A guess","An assessment backed by evidence","A locked skill"],correct:1},
+ {q:"Which is most important when testing software?",a:["Assume it works","Avoid testing","Check actual behaviour"],correct:2},
+ {q:"What is a useful strategy?",a:["A clear plan toward a goal","A random action","A completed reward"],correct:0},
+ {q:"What should an AI do with missing data?",a:["Invent it","Mark it unknown","Hide it"],correct:1}
 ];
-const starterMissions=[
-{title:"Record one skill level",description:"Choose one skill, enter your current level and add one sentence of supporting evidence.",xp:10},
-{title:"Add three genuine connections",description:"Open a skill profile and record three real connections to other skills, knowledge or a project.",xp:10},
-{title:"Save one knowledge entry",description:"Add one useful learning point to the Brain Archive with a clear title and explanation.",xp:10},
-{title:"Map a project to its skills",description:"Choose one real project and identify at least two skills it genuinely uses. Record the links in a skill profile.",xp:10},
-{title:"Create a data backup",description:"Export a LIFE OS67 JSON backup and check that the downloaded file exists on your device.",xp:10}
-];
-const defaults={archive:[],missions:[],achievements:[],abilities:[],note:"",skillProfiles:{},xp:0,xpHistory:[],chat:[],seeded:false};
-let data;
-try{data={...defaults,...(JSON.parse(localStorage.getItem("lifeos67"))||{})}}catch(e){data={...defaults}}
-data.skillProfiles=data.skillProfiles||{};data.xp=Number(data.xp)||0;data.xpHistory=data.xpHistory||[];
-function save(){try{localStorage.setItem("lifeos67",JSON.stringify(data))}catch(e){alert("Browser storage is full. Export a backup and remove some large entries.")}}
-function safe(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function showSection(id,button){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id)?.classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));if(button)button.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
-function skillLevel(s){const p=data.skillProfiles[s.name];return p&&p.level!==undefined?p.level:s.level}
-function renderSkills(){const q=(document.getElementById("skillSearch")?.value||"").toLowerCase();const host=document.getElementById("skillDirectory");host.innerHTML=defaultSkills.filter(s=>(s.name+" "+s.branch).toLowerCase().includes(q)).map(s=>{const level=skillLevel(s);return `<button class="card" onclick="openSkill('${safe(s.name)}')"><strong>${safe(s.name)}</strong><div class="skill-level">${level==null?"—":level+"/100"}</div><div class="skill-track"><i style="width:${level||0}%"></i></div><span>${safe(s.branch)} · ${level==null?"Level not entered":"Saved level"}</span></button>`}).join("")}
-function openSkill(name){const s=defaultSkills.find(x=>x.name===name);if(!s)return;const p=data.skillProfiles[name]||{};const level=skillLevel(s);document.getElementById("skillPanelName").textContent=name;document.getElementById("skillPanelBranch").textContent=s.branch;document.getElementById("skillPanelLevel").textContent=level==null?"Level not entered":level+"/100";document.getElementById("skillPanelBar").style.width=(level||0)+"%";document.getElementById("skillPanelDescription").textContent="Your individual "+name+" capability within "+s.branch+".";document.getElementById("editSkillLevel").value=level==null?"":level;document.getElementById("editSkillEvidence").value=p.evidence||"";document.getElementById("editSkillConnections").value=p.connections||"";document.getElementById("editSkillDevelopment").value=p.development||"";document.getElementById("skillPanelHistory").innerHTML=(p.history||[]).slice().reverse().map(h=>`${safe(h.date)} · ${h.level==null?"Level cleared":h.level+"/100"}`).join("<br>")||"No assessment history yet.";document.getElementById("skillSaveMessage").textContent="";document.getElementById("skillProfilePanel").style.display="block";document.getElementById("skillProfilePanel").scrollIntoView({behavior:"smooth"})}
-function closeSkill(){document.getElementById("skillProfilePanel").style.display="none"}
-function saveSkillProfile(){const name=document.getElementById("skillPanelName").textContent;const input=document.getElementById("editSkillLevel").value.trim();const level=input===""?null:Number(input);if(level!==null&&(!Number.isInteger(level)||level<1||level>100)){alert("Enter a whole number from 1 to 100, or leave it blank.");return}const old=data.skillProfiles[name]||{};const history=old.history||[];if(old.level!==level)history.push({level,date:new Date().toLocaleString()});data.skillProfiles[name]={level,evidence:document.getElementById("editSkillEvidence").value.trim(),connections:document.getElementById("editSkillConnections").value.trim(),development:document.getElementById("editSkillDevelopment").value.trim(),history,updatedAt:new Date().toISOString()};save();document.getElementById("skillPanelLevel").textContent=level==null?"Level not entered":level+"/100";document.getElementById("skillPanelBar").style.width=(level||0)+"%";document.getElementById("skillPanelHistory").innerHTML=history.slice().reverse().map(h=>`${safe(h.date)} · ${h.level==null?"Level cleared":h.level+"/100"}`).join("<br>")||"No assessment history yet.";document.getElementById("skillSaveMessage").textContent="Saved on this device.";renderSkills();renderDashboard();renderConnections()}
-function renderLifeMap(){document.getElementById("lifeMapBranches").innerHTML=branchInfo.map((b,i)=>`<button class="card" onclick="showBranch(${i})"><strong>${String(i+1).padStart(2,"0")} · ${safe(b.name)}</strong><span>${safe(b.desc)}</span><div class="small">${b.skills.length} connected skills</div></button>`).join("")}
-function showBranch(i){const b=branchInfo[i];document.getElementById("branchDetail").innerHTML=`<h2>${safe(b.name)}</h2><p>${safe(b.desc)}</p><h3>Skills</h3>${b.skills.map(n=>{const s=defaultSkills.find(x=>x.name===n);const l=s?skillLevel(s):null;return `<div class="node"><strong>${safe(n)}</strong> · ${l==null?"Level not entered":l+"/100"} ${s?`<button onclick="showSection('profile');openSkill('${safe(n)}')">Open profile</button>`:""}</div>`}).join("")}<h3>Related projects</h3><p>${b.projects.map(safe).join(" · ")}</p><h3>Knowledge areas</h3><p>${b.knowledge.map(safe).join(" · ")}</p><span class="tag">Proposed structure · not unlocked</span>`}
-function renderConnections(){document.getElementById("connectionMap").innerHTML=branchInfo.map(b=>`<div class="item"><strong>${safe(b.name)}</strong><div class="connection">${b.skills.map(n=>`<div class="node">${safe(n)}</div>`).join("")}<div class="node"><strong>Projects:</strong> ${b.projects.map(safe).join(" · ")}</div><div class="node"><strong>Knowledge:</strong> ${b.knowledge.map(safe).join(" · ")}</div></div></div>`).join("")}
-function seedMissions(){if(data.seeded)return;starterMissions.forEach(m=>data.missions.push({...m,status:"Available",starter:true,createdAt:new Date().toISOString()}));data.seeded=true;save()}
-function addMission(){const title=document.getElementById("missionTitle").value.trim(),description=document.getElementById("missionDescription").value.trim();if(!title)return alert("Enter a mission title.");data.missions.unshift({title,description,xp:10,status:"Available",starter:false});save();render();document.getElementById("missionTitle").value="";document.getElementById("missionDescription").value=""}
-function missionAction(i){const m=data.missions[i];if(m.status==="Completed")return;if(m.status==="Available"){m.status="Accepted"}else if(m.status==="Accepted"){m.status="In Progress"}else if(m.status==="In Progress"){if(!confirm("Submit this mission for your review?"))return;m.status="Submitted for Review"}else if(m.status==="Submitted for Review"){if(!confirm("Confirm that you personally completed this mission and its requirements? This awards "+(m.xp||10)+" XP once."))return;m.status="Completed";m.completedAt=new Date().toISOString();m.awardedXP=m.xp||10;data.xp+=m.awardedXP;data.xpHistory.push({mission:m.title,xp:m.awardedXP,date:new Date().toLocaleString()})}save();render()}
-function renderMissions(){document.getElementById("missionList").innerHTML=data.missions.map((m,i)=>`<div class="mission"><strong>${safe(m.title)}</strong><p>${safe(m.description)}</p><span class="tag">${safe(m.status)}</span><span class="tag">${m.xp||10} XP</span>${m.starter?'<span class="tag">Starter</span>':""}${m.awardedXP?`<p class="small">Awarded ${m.awardedXP} XP · ${safe(m.completedAt||"")}</p>`:""}<button onclick="missionAction(${i})" ${m.status==="Completed"?"disabled":""}>${m.status==="Available"?"Accept":m.status==="Accepted"?"Start":m.status==="In Progress"?"Submit for review":m.status==="Submitted for Review"?"Confirm completion & claim XP":"Completed"}</button></div>`).join("")||"<p>No missions yet.</p>"}
-function addArchive(){const title=document.getElementById("archiveTitle").value.trim(),body=document.getElementById("archiveBody").value.trim();if(!title)return alert("Enter a title.");data.archive.unshift({title,body,date:new Date().toLocaleString()});save();render();document.getElementById("archiveTitle").value="";document.getElementById("archiveBody").value=""}
-function addAchievement(){const title=document.getElementById("achievementTitle").value.trim(),evidence=document.getElementById("achievementEvidence").value.trim();if(!title||!evidence)return alert("Enter an achievement and evidence.");data.achievements.unshift({title,evidence,date:new Date().toLocaleString()});save();render();document.getElementById("achievementTitle").value="";document.getElementById("achievementEvidence").value=""}
-function proposeAbility(){const name=document.getElementById("abilityName").value.trim(),branch=document.getElementById("abilityBranch").value.trim();if(!name)return alert("Enter an ability name.");data.abilities.push({name,branch,status:"Proposed"});save();render();document.getElementById("abilityName").value="";document.getElementById("abilityBranch").value=""}
-function approveAbility(i){if(!confirm("You are approving this ability for activation. Continue?"))return;data.abilities[i].status="Player approved";data.abilities[i].approvedAt=new Date().toISOString();save();render()}
-function renderDashboard(){const level=Math.floor(data.xp/100)+1,within=data.xp%100;document.getElementById("playerLevel").textContent="LEVEL "+String(level).padStart(2,"0");document.getElementById("xpText").textContent=within+" / 100 XP";document.getElementById("xpFill").style.width=within+"%";document.getElementById("xpNext").textContent=(100-within)+" XP to next level";document.getElementById("liveXP").textContent=data.xp;document.getElementById("skillCount").textContent=defaultSkills.length;document.getElementById("ratedCount").textContent=defaultSkills.filter(s=>skillLevel(s)!=null).length;document.getElementById("missionCount").textContent=data.missions.filter(m=>m.status!=="Completed").length}
-function render(){document.getElementById("archiveList").innerHTML=data.archive.map(x=>`<div class="item"><strong>${safe(x.title)}</strong><p>${safe(x.body)}</p><span class="small">${safe(x.date)}</span></div>`).join("")||"<p>No entries yet.</p>";document.getElementById("achievementList").innerHTML=data.achievements.map(x=>`<div class="item"><strong>${safe(x.title)}</strong><p>${safe(x.evidence)}</p><span class="small">${safe(x.date)}</span></div>`).join("")||"<p>No achievements recorded yet.</p>";document.getElementById("treeList").innerHTML=data.abilities.map((x,i)=>`<div class="item"><strong>${safe(x.name)}</strong><p>${safe(x.branch)}</p><span class="tag">${safe(x.status)}</span>${x.status==="Proposed"?`<button onclick="approveAbility(${i})">I approve this ability</button>`:""}</div>`).join("")||"<p>No ability proposals yet.</p>";document.getElementById("approvalList").textContent="Only the player can approve or activate an ability.";document.getElementById("aiNote").value=data.note||"";renderMissions();renderDashboard()}
-function saveNote(){data.note=document.getElementById("aiNote").value;save();document.getElementById("noteStatus").textContent="Saved locally on this device."}
-function addChat(role,text){const log=document.getElementById("chatLog");const div=document.createElement("div");div.className="chatmsg "+(role==="user"?"user":"assistant");div.textContent=text;log.appendChild(div);log.scrollTop=log.scrollHeight}
-function runAICommand(){const field=document.getElementById("aiCommand"),raw=field.value.trim();if(!raw)return;addChat("user",raw);field.value="";const q=raw.toLowerCase();let answer="I can help organise your development. Ask me to analyse progress, review skills, suggest a mission, explain connections, or discuss a project.";if(q.includes("progress")||q.includes("analyse")||q.includes("analyze")||q.includes("summary")){const rated=defaultSkills.filter(s=>skillLevel(s)!=null);answer="YOUR CURRENT LOCAL SUMMARY\n\nLive XP: "+data.xp+"\nPlayer level: "+(Math.floor(data.xp/100)+1)+"\nSkills in directory: "+defaultSkills.length+"\nSkills with levels: "+rated.length+"\nMissions: "+data.missions.length+"\nCompleted missions: "+data.missions.filter(m=>m.status==="Completed").length+"\nArchive entries: "+data.archive.length+"\n\nI only analyse information saved in this browser. I will not invent missing levels or evidence."}else if(q.includes("weakness")||q.includes("gap")){const unknown=defaultSkills.filter(s=>skillLevel(s)==null).map(s=>s.name);answer="I can't call an unrated skill a weakness. These skills have no entered level yet: "+unknown.slice(0,12).join(", ")+(unknown.length>12?" and others.":".")+" Rate them only when you're ready, and add evidence so we can assess them fairly."}else if(q.includes("mission")||q.includes("task")){const next=data.missions.find(m=>m.status!=="Completed");answer=next?"Your next available mission is: "+next.title+"\n\n"+next.description+"\n\nReward: "+(next.xp||10)+" XP, awarded only after you submit it and confirm completion.":"All current missions are complete. I can help you define another one."}else if(q.includes("connection")||q.includes("map")||q.includes("project")){answer="Your Life Map connects branches to relevant skills, project applications and knowledge areas. Open Life Map and select a branch to explore. Connections shown there are proposed starting links; you can refine them in each skill profile."}else if(q.includes("unlock")||q.includes("activate")){answer="PLAYER AUTHORITY: I can assess and recommend a branch or ability, but I cannot unlock or activate it. You must explicitly approve every activation."}else if(q.includes("hello")||q.includes("hi")){answer="Hello. What would you like to build or improve today? I can review your current records or help turn an idea into a practical mission."}else if(q.includes("create")&&q.includes("mission")){answer="I can propose a mission, but I won't mark it complete. Use Mission Centre to create a task, or tell me the outcome you want and I'll help make it measurable."}addChat("assistant",answer)}
-function exportBackup(){const blob=new Blob([JSON.stringify({format:"LIFE OS67 BACKUP",version:3,exportedAt:new Date().toISOString(),data},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="LIFE-OS67-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(url);document.getElementById("backupStatus").textContent="Backup export requested. Check your device's Downloads folder."}
-function importBackup(){const file=document.getElementById("backupFile").files[0];if(!file)return alert("Choose a backup JSON file first.");const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const incoming=parsed.data||parsed;if(!incoming||!Array.isArray(incoming.archive)||!Array.isArray(incoming.missions)||typeof incoming!=="object")throw new Error("This does not look like a LIFE OS67 backup.");if(!confirm("Restore this backup? It will replace the current LIFE OS67 browser data."))return;data={...defaults,...incoming};save();render();renderSkills();renderLifeMap();renderConnections();document.getElementById("backupStatus").textContent="Backup restored successfully."}catch(e){document.getElementById("backupStatus").textContent="Restore failed: "+e.message}};reader.readAsText(file)}
-function resetLocalData(){if(!confirm("This permanently clears LIFE OS67 data stored in this browser. Export a backup first. Continue?"))return;localStorage.removeItem("lifeos67");data={...defaults};seedMissions();save();render();renderSkills();renderLifeMap();renderConnections();alert("Browser data reset.")}
-seedMissions();render();renderSkills();renderLifeMap();renderConnections();
+let currentQuestion=null;
+function newQuestion(){
+ currentQuestion=questions[Math.floor(Math.random()*questions.length)];
+ document.getElementById("gamearea").innerHTML=`<strong>${currentQuestion.q}</strong><div style="margin-top:12px">${currentQuestion.a.map((a,i)=>`<button class="action" onclick="answer(${i})">${esc(a)}</button>`).join("")}</div>`;
+}
+function answer(i){
+ if(!currentQuestion)return;
+ let correct=i===currentQuestion.correct;
+ state.games++;
+ let today=new Date().toISOString().slice(0,10);
+ if(state.gameDay!==today){state.gameDay=today;state.gameXP=0}
+ let reward=correct&&state.gameXP<50?Math.min(10,50-state.gameXP):0;
+ state.gameXP+=reward;state.xp+=reward;
+ document.getElementById("gamearea").innerHTML=`<strong>${correct?"Correct!":"Not quite."}</strong><p>${correct?"You earned "+reward+" XP.":"The correct answer was: "+esc(currentQuestion.a[currentQuestion.correct])}</p><button class="action primary" onclick="newQuestion()">Next question</button>`;
+ currentQuestion=null;save();
+}
+function askAI(){
+ let q=document.getElementById("question").value.trim();if(!q)return;
+ let answerText=localAI(q);
+ let log=document.getElementById("chatlog");
+ log.textContent+="\n\nYou: "+q+"\n\nMatt's Level AI: "+answerText;
+ document.getElementById("question").value="";
+}
+function localAI(q){
+ let t=q.toLowerCase();
+ let avg=(state.attributes.reduce((a,b)=>a+b.level,0)/state.attributes.length).toFixed(1);
+ if(/profile|attribute|level/.test(t))return "Your saved core attribute average is "+avg+"/100. Your current player level is "+level()+". Your new XP is "+state.xp+". Historical profile information is stored separately from new progress.";
+ if(/brain tree|unlock|branch/.test(t))return "You currently have "+unlocked()+" of "+branches.length+" main Brain Tree branches unlocked. Unlocking is automatic: each branch checks its published XP requirement. An unlocked branch is access to develop, not proof of mastery.";
+ if(/mission|task/.test(t))return "You have "+state.missions.filter(m=>!m.done).length+" active missions and "+state.missions.filter(m=>m.done).length+" completed missions. Create clear, achievable missions and record genuine completion.";
+ if(/project/.test(t))return "Your archive contains "+state.projects.length+" projects. Historical projects are labelled as training records until their status is updated with evidence.";
+ if(/skill|special/.test(t))return "You have "+state.specs.length+" historical specialisations and "+state.customSkills.length+" additional custom skill records. Missing historical records remain unknown rather than being invented.";
+ if(/xp|experience/.test(t))return "You have earned "+state.xp+" new XP in this version. XP is separate from your recovered historical 515 XP.";
+ if(/help|what can you/.test(t))return "I can inspect your profile, explain Brain Tree requirements, review missions, describe specialisations and suggest development activities. Ask a specific question.";
+ return "Based on your saved LIFE OS67 data, I recommend choosing one skill, defining what improvement looks like, recording evidence and creating a mission to practise it. I can answer more accurately if you ask about a particular attribute, specialisation, project or mission.";
+}
+function clearChat(){document.getElementById("chatlog").textContent="Matt's Level AI: Ready. Ask me about your development."}
+function exportData(){
+ let blob=new Blob([JSON.stringify({format:"LIFE OS67",version:5,exported:new Date().toISOString(),state},null,2)],{type:"application/json"});
+ let url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="LIFE-OS67-backup.json";a.click();URL.revokeObjectURL(url);
+}
+function importData(){
+ let file=document.getElementById("importfile").files[0];if(!file)return alert("Choose a backup file first.");
+ let reader=new FileReader();
+ reader.onload=()=>{
+ try{
+ let data=JSON.parse(reader.result);let imported=data.state||data;
+ if(!imported.attributes||!imported.specs||!Array.isArray(imported.missions))throw Error();
+ if(!confirm("Replace the current LIFE OS67 data with this backup?"))return;
+ state=imported;save();alert("Backup restored.");
+ }catch(e){alert("This file is not a valid LIFE OS67 backup.");}
+ };
+ reader.readAsText(file);
+}
+function resetData(){
+ if(!confirm("Reset all new data and return to the historical starting profile? Export a backup first."))return;
+ state=fresh();save();
+}
+load();render();
 </script>
 </body>
 </html>
